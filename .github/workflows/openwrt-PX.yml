@@ -13,10 +13,12 @@ on:
   push:
     branches: 
       - master
-  # schedule:
-  #   - cron: 0 20 * * *
+  schedule:
+    - cron: 0 20 * * *
   release:
     types: [published]
+  watch:
+    types: started
 
 env:
   PUSH_KEY: ${{ secrets.PUSH_KEY }}
