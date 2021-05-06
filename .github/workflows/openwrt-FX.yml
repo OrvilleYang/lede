@@ -6483,6 +6483,9 @@ jobs:
       - name: Run install
         run: npm install
         
+      - name: Run install re
+        run: npm install 'request' --save
+        
       - name: Run install rp
         run: npm install 'request-promise' --save
               
