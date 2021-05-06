@@ -6657,6 +6657,9 @@ jobs:
       - name: Run install
         run: npm install
         
+      - name: Run install dw
+        run: npm install 'download' --save
+        
       - name: Run install re
         run: npm install 'request' --save
         
