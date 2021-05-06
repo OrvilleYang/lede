@@ -10,9 +10,9 @@
 name: OpenWrt-CI
 
 on:
-  push:
-    branches: 
-      - master
+  #push:
+    #branches: 
+      #- master
   schedule:
     - cron: 0 20 * * *
   release:
@@ -6656,6 +6656,9 @@ jobs:
                 
       - name: Run install
         run: npm install
+        
+      - name: Run install re
+        run: npm install 'request' --save
         
       - name: Run install rp
         run: npm install 'request-promise' --save
