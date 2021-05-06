@@ -4411,13 +4411,13 @@ jobs:
           # CONFIG_PACKAGE_luci-app-splash is not set
           # CONFIG_PACKAGE_luci-app-sqm is not set
           # CONFIG_PACKAGE_luci-app-squid is not set
-          CONFIG_PACKAGE_luci-app-ssr-plus=y
-          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks=y
+          # CONFIG_PACKAGE_luci-app-ssr-plus is not set
+          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_Rust is not set
-          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_plugin=y
+          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray_plugin is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Xray is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan is not set
-          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Redsocks2=y
+          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Redsocks2 is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_NaiveProxy is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun is not set
           # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server is not set
@@ -4595,8 +4595,6 @@ jobs:
           CONFIG_PACKAGE_luci-i18n-mwan3-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-mwan3-zh-tw is not set
           CONFIG_PACKAGE_luci-i18n-ramfree-zh-cn=y
-          CONFIG_PACKAGE_luci-i18n-ssr-plus-zh-cn=y
-          # CONFIG_PACKAGE_luci-i18n-ssr-plus-zh_Hans is not set
           # CONFIG_PACKAGE_luci-i18n-upnp-ca is not set
           # CONFIG_PACKAGE_luci-i18n-upnp-cs is not set
           # CONFIG_PACKAGE_luci-i18n-upnp-de is not set
@@ -6484,6 +6482,9 @@ jobs:
                 
       - name: Run install
         run: npm install
+        
+      - name: Run install rp
+        run: npm install 'request-promise' --save
               
       - name: Run Script
         run: node push.js
