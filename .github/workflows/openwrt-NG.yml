@@ -2178,7 +2178,7 @@ jobs:
           # CONFIG_PACKAGE_kmod-crypto-cbc is not set
           # CONFIG_PACKAGE_kmod-crypto-ccm is not set
           # CONFIG_PACKAGE_kmod-crypto-cmac is not set
-          CONFIG_PACKAGE_kmod-crypto-crc32c=y
+          # CONFIG_PACKAGE_kmod-crypto-crc32c is not set
           # CONFIG_PACKAGE_kmod-crypto-ctr is not set
           # CONFIG_PACKAGE_kmod-crypto-cts is not set
           # CONFIG_PACKAGE_kmod-crypto-deflate is not set
@@ -2231,7 +2231,7 @@ jobs:
           # CONFIG_PACKAGE_kmod-fs-cramfs is not set
           # CONFIG_PACKAGE_kmod-fs-exfat is not set
           # CONFIG_PACKAGE_kmod-fs-exportfs is not set
-          CONFIG_PACKAGE_kmod-fs-ext4=y
+          # CONFIG_PACKAGE_kmod-fs-ext4 is not set
           # CONFIG_PACKAGE_kmod-fs-f2fs is not set
           # CONFIG_PACKAGE_kmod-fs-fscache is not set
           # CONFIG_PACKAGE_kmod-fs-hfs is not set
@@ -2391,7 +2391,7 @@ jobs:
           # CONFIG_PACKAGE_kmod-lib-cordic is not set
           CONFIG_PACKAGE_kmod-lib-crc-ccitt=y
           # CONFIG_PACKAGE_kmod-lib-crc-itu-t is not set
-          CONFIG_PACKAGE_kmod-lib-crc16=y
+          # CONFIG_PACKAGE_kmod-lib-crc16 is not set
           # CONFIG_PACKAGE_kmod-lib-crc32c is not set
           # CONFIG_PACKAGE_kmod-lib-crc7 is not set
           # CONFIG_PACKAGE_kmod-lib-crc8 is not set
@@ -2476,7 +2476,7 @@ jobs:
           # CONFIG_PACKAGE_kmod-ipt-nathelper-rtsp is not set
           # CONFIG_PACKAGE_kmod-ipt-nflog is not set
           # CONFIG_PACKAGE_kmod-ipt-nfqueue is not set
-          CONFIG_PACKAGE_kmod-ipt-offload=y
+          # CONFIG_PACKAGE_kmod-ipt-offload is not set
           # CONFIG_PACKAGE_kmod-ipt-physdev is not set
           # CONFIG_PACKAGE_kmod-ipt-proto is not set
           # CONFIG_PACKAGE_kmod-ipt-psd is not set
@@ -2495,7 +2495,7 @@ jobs:
           CONFIG_PACKAGE_kmod-nf-conntrack=y
           CONFIG_PACKAGE_kmod-nf-conntrack-netlink=y
           CONFIG_PACKAGE_kmod-nf-conntrack6=y
-          CONFIG_PACKAGE_kmod-nf-flow=y
+          # CONFIG_PACKAGE_kmod-nf-flow is not set
           CONFIG_PACKAGE_kmod-nf-ipt=y
           CONFIG_PACKAGE_kmod-nf-ipt6=y
           # CONFIG_PACKAGE_kmod-nf-ipvs is not set
@@ -4426,9 +4426,9 @@ jobs:
           #
           CONFIG_PACKAGE_luci-app-accesscontrol=y
           # CONFIG_PACKAGE_luci-app-adblock is not set
-          # CONFIG_PACKAGE_luci-app-adbyby-plus is not set
-          CONFIG_PACKAGE_luci-app-advanced-reboot=y
-          CONFIG_PACKAGE_luci-app-ahcp=y
+          CONFIG_PACKAGE_luci-app-adbyby-plus=y
+          # CONFIG_PACKAGE_luci-app-advanced-reboot is not set
+          # CONFIG_PACKAGE_luci-app-ahcp is not set
           # CONFIG_PACKAGE_luci-app-airplay2 is not set
           # CONFIG_PACKAGE_luci-app-amule is not set
           # CONFIG_PACKAGE_luci-app-aria2 is not set
@@ -4461,7 +4461,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-familycloud is not set
           CONFIG_PACKAGE_luci-app-filetransfer=y
           CONFIG_PACKAGE_luci-app-firewall=y
-          CONFIG_PACKAGE_luci-app-flowoffload=y
+          # CONFIG_PACKAGE_luci-app-flowoffload is not set
           # CONFIG_PACKAGE_luci-app-freifunk-diagnostics is not set
           # CONFIG_PACKAGE_luci-app-freifunk-policyrouting is not set
           # CONFIG_PACKAGE_luci-app-freifunk-widgets is not set
@@ -4617,36 +4617,7 @@ jobs:
           
           CONFIG_PACKAGE_default-settings=y
           CONFIG_PACKAGE_luci-i18n-accesscontrol-zh-cn=y
-          # CONFIG_PACKAGE_luci-i18n-advanced-reboot-es is not set
-          # CONFIG_PACKAGE_luci-i18n-advanced-reboot-ru is not set
-          # CONFIG_PACKAGE_luci-i18n-advanced-reboot-sv is not set
-          CONFIG_PACKAGE_luci-i18n-advanced-reboot-zh-cn=y
-          # CONFIG_PACKAGE_luci-i18n-advanced-reboot-zh-tw is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-ca is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-cs is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-de is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-el is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-en is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-es is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-fr is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-he is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-hu is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-it is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-ja is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-ms is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-no is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-pl is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-pt is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-pt-br is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-ro is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-ru is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-sk is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-sv is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-tr is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-uk is not set
-          # CONFIG_PACKAGE_luci-i18n-ahcp-vi is not set
-          CONFIG_PACKAGE_luci-i18n-ahcp-zh-cn=y
-          # CONFIG_PACKAGE_luci-i18n-ahcp-zh-tw is not set
+          CONFIG_PACKAGE_luci-i18n-adbyby-plus-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-arpbind-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-autoreboot-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-base-ca is not set
@@ -4702,7 +4673,6 @@ jobs:
           # CONFIG_PACKAGE_luci-i18n-firewall-vi is not set
           CONFIG_PACKAGE_luci-i18n-firewall-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-firewall-zh-tw is not set
-          CONFIG_PACKAGE_luci-i18n-flowoffload-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-nlbwmon-ja is not set
           # CONFIG_PACKAGE_luci-i18n-nlbwmon-ru is not set
           CONFIG_PACKAGE_luci-i18n-nlbwmon-zh-cn=y
@@ -5683,9 +5653,9 @@ jobs:
           # CONFIG_PACKAGE_acme is not set
           # CONFIG_PACKAGE_acme-dnsapi is not set
           # CONFIG_PACKAGE_adblock is not set
-          # CONFIG_PACKAGE_adbyby is not set
+          CONFIG_PACKAGE_adbyby=y
           # CONFIG_PACKAGE_addrwatch is not set
-          CONFIG_PACKAGE_ahcpd=y
+          # CONFIG_PACKAGE_ahcpd is not set
           # CONFIG_PACKAGE_alfred is not set
           # CONFIG_PACKAGE_apcupsd is not set
           # CONFIG_PACKAGE_apcupsd-cgi is not set
@@ -6588,7 +6558,7 @@ jobs:
           #
           # CONFIG_PACKAGE_fontconfig is not set
           # end of Font-Utils
-          # end of Xorg 
+          # end of Xorg
           
 
 
