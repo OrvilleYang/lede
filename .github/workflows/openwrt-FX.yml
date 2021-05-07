@@ -4334,7 +4334,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-clamav is not set
           # CONFIG_PACKAGE_luci-app-commands is not set
           # CONFIG_PACKAGE_luci-app-cshark is not set
-          CONFIG_PACKAGE_luci-app-ddns=y
+          # CONFIG_PACKAGE_luci-app-ddns is not set
           # CONFIG_PACKAGE_luci-app-diag-core is not set
           # CONFIG_PACKAGE_luci-app-diskman is not set
           # CONFIG_PACKAGE_luci-app-diskman_INCLUDE_btrfs_progs is not set
@@ -4394,7 +4394,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-qbittorrent is not set
           # CONFIG_PACKAGE_luci-app-qos is not set
           # CONFIG_PACKAGE_luci-app-radicale is not set
-          CONFIG_PACKAGE_luci-app-ramfree=y
+          # CONFIG_PACKAGE_luci-app-ramfree is not set
           # CONFIG_PACKAGE_luci-app-rclone is not set
           # CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-webui is not set
           # CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-ng is not set
@@ -4459,7 +4459,7 @@ jobs:
           # CONFIG_PACKAGE_luci-theme-argon is not set
           CONFIG_PACKAGE_luci-theme-bootstrap=y
           # CONFIG_PACKAGE_luci-theme-material is not set
-          CONFIG_PACKAGE_luci-theme-netgear=y
+          # CONFIG_PACKAGE_luci-theme-netgear is not set
           # end of 4. Themes
           
           #
@@ -4534,35 +4534,6 @@ jobs:
           # CONFIG_PACKAGE_luci-i18n-base-vi is not set
           CONFIG_PACKAGE_luci-i18n-base-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-base-zh-tw is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-bg is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-ca is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-cs is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-de is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-el is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-en is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-es is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-fr is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-he is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-hi is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-hu is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-it is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-ja is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-ko is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-mr is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-ms is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-no is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-pl is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-pt is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-pt-br is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-ro is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-ru is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-sk is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-sv is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-tr is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-uk is not set
-          # CONFIG_PACKAGE_luci-i18n-ddns-vi is not set
-          CONFIG_PACKAGE_luci-i18n-ddns-zh-cn=y
-          # CONFIG_PACKAGE_luci-i18n-ddns-zh-tw is not set
           CONFIG_PACKAGE_luci-i18n-filetransfer-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-firewall-ca is not set
           # CONFIG_PACKAGE_luci-i18n-firewall-cs is not set
@@ -4594,7 +4565,6 @@ jobs:
           # CONFIG_PACKAGE_luci-i18n-mwan3-ru is not set
           CONFIG_PACKAGE_luci-i18n-mwan3-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-mwan3-zh-tw is not set
-          CONFIG_PACKAGE_luci-i18n-ramfree-zh-cn=y
           CONFIG_PACKAGE_luci-i18n-ssr-plus-zh-cn=y
           # CONFIG_PACKAGE_luci-i18n-ssr-plus-zh_Hans is not set
           # CONFIG_PACKAGE_luci-i18n-upnp-ca is not set
@@ -5133,7 +5103,7 @@ jobs:
           #
           # Project V
           #
-          CONFIG_PACKAGE_v2ray-plugin=y
+          # CONFIG_PACKAGE_v2ray-plugin is not set
           CONFIG_v2ray-plugin_INCLUDE_GOPROXY=y
           # end of Project V
           
