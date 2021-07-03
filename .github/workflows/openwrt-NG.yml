@@ -4561,7 +4561,7 @@ jobs:
           CONFIG_PACKAGE_luci-app-wol=y
           # CONFIG_PACKAGE_luci-app-wrtbwmon is not set
           # CONFIG_PACKAGE_luci-app-xlnetacc is not set
-          # CONFIG_PACKAGE_luci-app-zerotier is not set
+          CONFIG_PACKAGE_luci-app-zerotier=y
           # end of 3. Applications
           
           #
@@ -5488,7 +5488,7 @@ jobs:
           # CONFIG_PACKAGE_vpnc-scripts is not set
           # CONFIG_PACKAGE_wireguard is not set
           # CONFIG_PACKAGE_xl2tpd is not set
-          # CONFIG_PACKAGE_zerotier is not set
+          CONFIG_PACKAGE_zerotier=y
           # end of VPN
           
           #
