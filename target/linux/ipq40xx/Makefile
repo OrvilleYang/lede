@@ -6,7 +6,7 @@ BOARDNAME:=Qualcomm Atheros IPQ40XX
 FEATURES:=squashfs fpu ramdisk nand
 CPU_TYPE:=cortex-a7
 CPU_SUBTYPE:=neon-vfpv4
-SUBTARGETS:=generic
+MAINTAINER:=John Crispin <john@phrozen.org>
 
 KERNEL_PATCHVER:=5.4
 
@@ -19,6 +19,6 @@ DEFAULT_PACKAGES += \
 	kmod-ath10k-ct wpad-openssl \
 	kmod-usb3 kmod-usb-dwc3 ath10k-firmware-qca4019-ct \
 	autocore-arm automount autosamba luci-app-adbyby-plus luci-app-ipsec-vpnd luci-app-unblockmusic luci-app-cpufreq luci-app-zerotier \
-	htop ethtool
+	htop ethtool luci-app-cpufreq
 
 $(eval $(call BuildTarget))
