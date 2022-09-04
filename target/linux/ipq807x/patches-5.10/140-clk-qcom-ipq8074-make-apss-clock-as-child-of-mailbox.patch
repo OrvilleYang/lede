@@ -100,6 +100,6 @@ Change-Id: Ic26ee78b6f680fa0655a73d3176bae271725ab05
  		apcs->clk = platform_device_register_data(&pdev->dev,
 -							  apcs_data->clk_name,
 +							  device_id->data,
- 							  PLATFORM_DEVID_NONE,
+ 							  PLATFORM_DEVID_AUTO,
  							  NULL, 0);
  		if (IS_ERR(apcs->clk))

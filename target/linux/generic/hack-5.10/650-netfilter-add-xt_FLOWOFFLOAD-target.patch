@@ -98,7 +98,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  obj-$(CONFIG_NETFILTER_XT_TARGET_LED) += xt_LED.o
 --- /dev/null
 +++ b/net/netfilter/xt_FLOWOFFLOAD.c
-@@ -0,0 +1,658 @@
+@@ -0,0 +1,657 @@
 +/*
 + * Copyright (C) 2018-2021 Felix Fietkau <nbd@nbd.name>
 + *
@@ -278,8 +278,6 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +		hook->used = true;
 +	}
 +	spin_unlock_bh(&hooks_lock);
-+
-+	cond_resched();
 +}
 +
 +static void
@@ -359,7 +357,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +	if ((dev->flags & IFF_LOOPBACK) ||
 +	    dev->type != ARPHRD_ETHER || dev->addr_len != ETH_ALEN ||
 +	    !is_valid_ether_addr(dev->dev_addr))
-+		return;
++		{printk("test %d",dev->type); return;}
 +
 +	n = dst_neigh_lookup(dst, daddr);
 +	if (!n)
@@ -577,15 +575,16 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +	}
 +
 +	table = &flowtable[!!(info->flags & XT_FLOWOFFLOAD_HW)];
++
++	net = read_pnet(&table->ft.net);
++	if (!net)
++		write_pnet(&table->ft.net, xt_net(par));
++
 +	if (flow_offload_add(&table->ft, flow) < 0)
 +		goto err_flow_add;
 +
 +	xt_flowoffload_check_device(table, devs[0]);
 +	xt_flowoffload_check_device(table, devs[1]);
-+
-+	net = read_pnet(&table->ft.net);
-+	if (!net)
-+		write_pnet(&table->ft.net, xt_net(par));
 +
 +	dst_release(route.tuple[dir].dst);
 +	dst_release(route.tuple[!dir].dst);
@@ -767,7 +766,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  #include <net/netfilter/nf_flow_table.h>
  #include <net/netfilter/nf_conntrack.h>
  #include <net/netfilter/nf_conntrack_core.h>
-@@ -355,8 +354,7 @@ flow_offload_lookup(struct nf_flowtable
+@@ -395,8 +394,7 @@ flow_offload_lookup(struct nf_flowtable
  }
  EXPORT_SYMBOL_GPL(flow_offload_lookup);
  
@@ -777,7 +776,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  		      void (*iter)(struct flow_offload *flow, void *data),
  		      void *data)
  {
-@@ -388,6 +386,7 @@ nf_flow_table_iterate(struct nf_flowtabl
+@@ -428,6 +426,7 @@ nf_flow_table_iterate(struct nf_flowtabl
  
  	return err;
  }
@@ -807,7 +806,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +#endif /* _XT_FLOWOFFLOAD_H */
 --- a/include/net/netfilter/nf_flow_table.h
 +++ b/include/net/netfilter/nf_flow_table.h
-@@ -265,6 +265,10 @@ void nf_flow_table_free(struct nf_flowta
+@@ -270,6 +270,10 @@ void nf_flow_table_free(struct nf_flowta
  
  void flow_offload_teardown(struct flow_offload *flow);
  

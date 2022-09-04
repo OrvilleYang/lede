@@ -81,8 +81,7 @@ define KernelPackage/dma-ralink
 	CONFIG_DMA_RALINK
   FILES:= \
 	$(LINUX_DIR)/drivers/dma/virt-dma.ko \
-	$(LINUX_DIR)/drivers/dma/ralink-gdma.ko@lt5.4 \
-	$(LINUX_DIR)/drivers/staging/ralink-gdma/ralink-gdma.ko@ge5.4
+	$(LINUX_DIR)/drivers/staging/ralink-gdma/ralink-gdma.ko
   AUTOLOAD:=$(call AutoLoad,52,ralink-gdma)
 endef
 
@@ -134,3 +133,18 @@ define KernelPackage/sound-mt7620/description
 endef
 
 $(eval $(call KernelPackage,sound-mt7620))
+
+define KernelPackage/mtk-hnat
+  SUBMENU:=Network Devices
+  TITLE:=MediaTek MT762x HW NAT driver
+  DEPENDS:=@TARGET_ramips @TARGET_ramips_mt7621 +kmod-nf-flow
+  KCONFIG:= \
+	CONFIG_BRIDGE_NETFILTER=y \
+	CONFIG_NET_MEDIATEK_HNAT \
+	CONFIG_NETFILTER_FAMILY_BRIDGE=y
+  FILES:= \
+	$(LINUX_DIR)/drivers/net/ethernet/mtk/mtk_hnat/mtkhnat.ko
+  AUTOLOAD:=$(call AutoLoad,55,mtkhnat)
+endef
+
+$(eval $(call KernelPackage,mtk-hnat))

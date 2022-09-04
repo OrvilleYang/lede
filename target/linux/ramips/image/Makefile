@@ -5,12 +5,13 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/image.mk
 
-DEVICE_VARS += LOADER_TYPE LOADER_FLASH_OFFS
+DEVICE_VARS += LOADER_TYPE LOADER_FLASH_OFFS LZMA_TEXT_START
 DEVICE_VARS += NETGEAR_BOARD_ID NETGEAR_HW_ID
 DEVICE_VARS += BUFFALO_TAG_PLATFORM BUFFALO_TAG_VERSION BUFFALO_TAG_MINOR
 DEVICE_VARS += SEAMA_SIGNATURE SEAMA_MTDBLOCK
 DEVICE_VARS += SERCOMM_HWNAME SERCOMM_HWID SERCOMM_HWVER SERCOMM_SWVER
 DEVICE_VARS += SERCOMM_PAD JCG_MAXSIZE
+DEVICE_VARS += SERCOMM_KERNEL_OFFSET SERCOMM_ROOTFS_OFFSET
 
 loadaddr-y := 0x80000000
 loadaddr-$(CONFIG_TARGET_ramips_rt288x) := 0x88000000
@@ -22,7 +23,7 @@ ldrplatform-$(CONFIG_TARGET_ramips_mt7621) := mt7621
 ldrflashstart-y := 0x1c000000
 ldrflashstart-$(CONFIG_TARGET_ramips_mt7621) := 0x1fc00000
 
-KERNEL_LOADADDR := $(loadaddr-y)
+LOADADDR := $(loadaddr-y)
 LOADER_PLATFORM := $(ldrplatform-y)
 LOADER_FLASH_START := $(ldrflashstart-y)
 
@@ -46,7 +47,8 @@ define Build/loader-common
 		PKG_BUILD_DIR="$@.src" \
 		TARGET_DIR="$(dir $@)" LOADER_NAME="$(notdir $@)" \
 		BOARD="$(BOARDNAME)" PLATFORM="$(LOADER_PLATFORM)" \
-		LZMA_TEXT_START=0x81800000 LOADADDR=$(KERNEL_LOADADDR) \
+		LZMA_TEXT_START=$(LZMA_TEXT_START) \
+		LOADADDR=$(LOADADDR) \
 		$(1) compile loader.$(LOADER_TYPE)
 	mv "$@.$(LOADER_TYPE)" "$@"
 	rm -rf $@.src
@@ -117,6 +119,12 @@ define Build/sercom-footer
 	$(call Build/sercom-seal,-f)
 endef
 
+define Build/sercomm-kernel
+	$(TOPDIR)/scripts/sercomm-kernel.sh $@ \
+		$(SERCOMM_KERNEL_OFFSET) \
+		$(SERCOMM_ROOTFS_OFFSET)
+endef
+
 define Build/sercom-seal
 	$(STAGING_DIR_HOST)/bin/mksercommfw \
 		-i $@ \
@@ -159,6 +167,8 @@ endef
 
 define Device/Default
   PROFILES = Default
+  KERNEL_LOADADDR := $(loadaddr-y)
+  LZMA_TEXT_START := 0x81800000
   KERNEL := $(KERNEL_DTB) | uImage lzma
   SOC := $(DEFAULT_SOC)
   DEVICE_DTS_DIR := ../dts
@@ -166,7 +176,7 @@ define Device/Default
   IMAGES := sysupgrade.bin
   COMPILE :=
   sysupgrade_bin := append-kernel | append-rootfs | pad-rootfs
-  IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | append-metadata | check-size
+  IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | check-size | append-metadata
 endef
 
 define Device/netgear_sercomm_nor
@@ -175,7 +185,7 @@ define Device/netgear_sercomm_nor
   IMAGES += factory.img
   IMAGE/default := append-kernel | pad-to $$$$(BLOCKSIZE) | append-rootfs | \
 	pad-rootfs
-  IMAGE/sysupgrade.bin := $$(IMAGE/default) | append-metadata | check-size
+  IMAGE/sysupgrade.bin := $$(IMAGE/default) | check-size | append-metadata
   IMAGE/factory.img := pad-extra $$$$(SERCOMM_PAD) | $$(IMAGE/default) | \
 	pad-to $$$$(BLOCKSIZE) | sercom-footer | pad-to 128 | \
 	zip $$$$(SERCOMM_HWNAME).bin | sercom-seal
@@ -190,7 +200,7 @@ define Device/seama
   # - 36 bytes of META data (4-bytes aligned)
   IMAGE/default := append-kernel | pad-offset $$$$(BLOCKSIZE) 64 | append-rootfs
   IMAGE/sysupgrade.bin := \
-	$$(IMAGE/default) | seama | pad-rootfs | append-metadata | check-size
+	$$(IMAGE/default) | seama | pad-rootfs | check-size | append-metadata
   IMAGE/factory.bin := \
 	$$(IMAGE/default) | pad-rootfs -x 64 | seama | seama-seal | check-size
   SEAMA_SIGNATURE :=

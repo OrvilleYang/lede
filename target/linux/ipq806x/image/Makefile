@@ -23,6 +23,17 @@ define Build/edimax-header
 	@mv $@.new $@
 endef
 
+# tune addpattern for Linksys E8350-V1 fw pattern generation
+define Build/linksys-bin
+        $(STAGING_DIR_HOST)/bin/addpattern -p $(FW_DEVICE_ID) -v $(FW_VERSION) $(if $(SERIAL),-s $(SERIAL)) -i $@ -o $@.new
+        mv $@.new $@
+endef
+# Use Linksys fw header generator to upgrade openwrt factory image over the native Linksys WEB interface
+define Build/linksys-addfwhdr
+        -$(STAGING_DIR_HOST)/bin/addfwhdr -i $@ -o $@.new \
+       	;mv "$@.new" "$@"
+endef
+
 define Device/Default
 	PROFILES := Default
 	KERNEL_DEPENDS = $$(wildcard $(DTS_DIR)/$$(DEVICE_DTS).dts)
@@ -90,18 +101,42 @@ define Device/ZyXELImage
 	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-to $$$$(BLOCKSIZE) | sysupgrade-tar rootfs=$$$$@ | append-metadata
 endef
 
-define Device/askey_rt4230w-rev6
+define Device/arris_rac2v1a
 	$(call Device/LegacyImage)
-	DEVICE_VENDOR := Askey
-	DEVICE_MODEL := RT4230W
-	DEVICE_VARIANT := REV6
+	DEVICE_VENDOR := Arris
+	DEVICE_MODEL := RAC2V1A
+	DEVICE_ALT0_VENDOR := Arris
+	DEVICE_ALT0_MODEL := TR4400-AC
 	SOC := qcom-ipq8065
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
-	DEVICE_PACKAGES := ath10k-firmware-qca9984-ct
 	KERNEL_IN_UBI := 1
+	DEVICE_PACKAGES := ath10k-firmware-qca9984-ct ath10k-firmware-qca99x0-ct
+endef
+TARGET_DEVICES += arris_rac2v1a
+
+define Device/askey_rt4230w
+	$(call Device/LegacyImage)
+	DEVICE_VENDOR := Askey
+	DEVICE_MODEL := RT4230W
+	SOC := qcom-ipq8065
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	KERNEL_IN_UBI := 1
+	DEVICE_PACKAGES := ath10k-firmware-qca9984-ct
+endef
+
+define Device/askey_rt4230w-rev6
+	$(call Device/askey_rt4230w)
+	DEVICE_VARIANT := REV6
 endef
 TARGET_DEVICES += askey_rt4230w-rev6
+
+define Device/askey_rt4230w-rev9.3
+	$(call Device/askey_rt4230w)
+	DEVICE_VARIANT := REV9.3
+endef
+TARGET_DEVICES += askey_rt4230w-rev9.3
 
 define Device/asrock_g10
 	$(call Device/FitImage)
@@ -170,9 +205,27 @@ define Device/linksys_ea7500-v1
 	UBINIZE_OPTS := -E 5
 	IMAGES := factory.bin sysupgrade.bin
 	IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi | pad-to $$$$(PAGESIZE)
-	DEVICE_PACKAGES := ath10k-firmware-qca99x0-ct
+	DEVICE_PACKAGES := -kmod-ath10k-ct kmod-ath10k-ct-smallbuffers ath10k-firmware-qca99x0-ct luci-app-advanced-reboot
 endef
 TARGET_DEVICES += linksys_ea7500-v1
+
+define Device/linksys_e8350-v1
+	$(call Device/LegacyImage)
+	DEVICE_VENDOR := Linksys
+	DEVICE_MODEL := E8350
+	DEVICE_VARIANT := v1
+	SOC := qcom-ipq8064
+	FW_VERSION := v1.0.03.003
+	FW_DEVICE_ID := 8350
+	PAGESIZE := 2048
+	BLOCKSIZE := 128k
+	KERNEL_IN_UBI := 1
+	IMAGES = factory.bin sysupgrade.ubi
+	IMAGE/sysupgrade.ubi := append-ubi | check-size 0x08000000 | append-metadata
+	IMAGE/factory.bin := append-ubi | check-size 0x08000000 | linksys-addfwhdr | linksys-bin
+	DEVICE_PACKAGES := ath10k-firmware-qca988x-ct qtn-utils qtn-firmware qtn-proto kmod-qtn-pcie2
+endef
+TARGET_DEVICES += linksys_e8350-v1
 
 define Device/linksys_ea8500
 	$(call Device/LegacyImage)
@@ -188,7 +241,7 @@ define Device/linksys_ea8500
 	UBINIZE_OPTS := -E 5
 	IMAGES += factory.bin
 	IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi
-	DEVICE_PACKAGES := ath10k-firmware-qca99x0-ct
+	DEVICE_PACKAGES := ath10k-firmware-qca99x0-ct luci-app-advanced-reboot
 endef
 TARGET_DEVICES += linksys_ea8500
 
@@ -247,7 +300,7 @@ define Device/netgear_r7500
 	PAGESIZE := 2048
 	BOARD_NAME := r7500
 	SUPPORTED_DEVICES += r7500
-	DEVICE_PACKAGES := ath10k-firmware-qca988x-ct
+	DEVICE_PACKAGES := ath10k-firmware-qca988x-ct qtn-utils qtn-firmware qtn-proto kmod-qtn-pcie2
 endef
 TARGET_DEVICES += netgear_r7500
 
@@ -283,6 +336,20 @@ define Device/netgear_r7800
 	DEVICE_PACKAGES := ath10k-firmware-qca9984-ct
 endef
 TARGET_DEVICES += netgear_r7800
+
+define Device/netgear_xr500
+	$(call Device/DniImage)
+	DEVICE_VENDOR := NETGEAR
+	DEVICE_MODEL := Nighthawk Pro Gaming XR500
+	SOC := qcom-ipq8065
+	KERNEL_SIZE := 4096k
+	NETGEAR_BOARD_ID := XR500
+	NETGEAR_HW_ID := 29764958+0+256+512+4x4+4x4+cascade
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_PACKAGES := ath10k-firmware-qca9984-ct
+endef
+TARGET_DEVICES += netgear_xr500
 
 define Device/qcom_ipq8064-ap148
 	$(call Device/FitImage)
@@ -360,6 +427,37 @@ define Device/ruijie_rg-mtfi-m520
 	kmod-fs-ext4 kmod-fs-f2fs kmod-rtc-pcf8563 losetup mkf2fs
 endef
 TARGET_DEVICES += ruijie_rg-mtfi-m520
+
+define Device/norton_core-518
+	DEVICE_TITLE := Norton Core 518
+	BOARD_NAME := core-518
+	SOC := qcom-ipq8065
+	DEVICE_DTS := qcom-ipq8065-core-518
+	BLOCKSIZE := 64k
+	KERNEL_SIZE := 4096k
+	KERNEL_SUFFIX := -uImage
+	KERNEL = kernel-bin | append-dtb | uImage none | pad-to $${KERNEL_SIZE}
+	KERNEL_NAME := zImage
+	SUPPORTED_DEVICES += core-518
+	DEVICE_PACKAGES := ath10k-firmware-qca9984-ct e2fsprogs kmod-fs-ext4 losetup f2fs-tools
+	IMAGES := mmcblk0p10-rootfs.bin mmcblk0p9-kernel.bin sysupgrade.bin
+	IMAGE/sysupgrade.bin/squashfs := append-rootfs | pad-to $$$${BLOCKSIZE} | sysupgrade-tar rootfs=$$$$@ | append-metadata
+	IMAGE/mmcblk0p9-kernel.bin := pad-extra 40 | append-kernel | pad-to $$$${KERNEL_SIZE}
+	IMAGE/mmcblk0p10-rootfs.bin := append-rootfs | pad-rootfs
+endef
+TARGET_DEVICES += norton_core-518
+
+define Device/surf_g-nat200
+	$(call Device/LegacyImage)
+	DEVICE_VENDOR := SURF
+	DEVICE_MODEL := G-NAT200
+	SOC := qcom-ipq8064
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	IMAGE_SIZE := 26624k
+	IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | append-metadata
+endef
+TARGET_DEVICES += surf_g-nat200
 
 define Device/tplink_ad7200
 	$(call Device/TpSafeImage)
